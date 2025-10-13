@@ -1,0 +1,8 @@
+beaglebone-v-fire:
+  hosts:
+    192.168.7.2:
+      ansible_host: 192.168.7.2
+      ansible_user: beagle
+      ansible_ssh_pass: beagletemppwd
+      ansible_become_pass: beagletemppwd
+      ansible_connection: ssh

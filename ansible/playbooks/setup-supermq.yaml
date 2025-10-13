@@ -1,0 +1,17 @@
+- name: Setup Beagle Board V Fire
+  hosts: "beaglebone-v-fire"
+  become: true
+  tasks:
+    - name: Clone a repo with separate git directory
+      ansible.builtin.git:
+        clone: true
+        repo: https://github.com/absmach/supermq.git
+        dest: /home/beagle/supermq
+
+    - name: Change directory to the repo
+      ansible.builtin.shell:
+        cmd: cd /home/beagle/supermq
+
+    - name: Pull the latest docker images
+      ansible.builtin.shell:
+        cmd: docker-compose -f docker/docker-compose.yaml pull
