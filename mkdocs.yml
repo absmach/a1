@@ -21,4 +21,5 @@ nav:
   - Features: features.md
   - Software:
       - S1 and SuperMQ: supermq.md
+      - Gateware: gateware.md
       
