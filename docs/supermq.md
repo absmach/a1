@@ -22,7 +22,7 @@ sudo apt install mosquitto-clients
 ```
 
 ```bash
-export SUPERMQ_HOST="192.168.100.129"
+export SUPERMQ_HOST="messaging.magistrala.absmach.eu"
 export DOMAIN_ID="56a4462e-5001-4bcf-b421-dbbe3d59c53c"
 export CHANNEL_ID="0efb859c-f606-442d-9c9e-fd924cfee654"
 export CLIENT_ID="bd2733d1-fcda-4974-bd7b-63b87a2e150f"
@@ -40,23 +40,15 @@ mosquitto_pub -u $CLIENT_ID -P $CLIENT_KEY -t m/$DOMAIN_ID/c/$CHANNEL_ID -I supe
 ### MQTTS
 
 ```bash
-cd docker/ssl
-make all
-CN_SRV="192.168.100.129" CLIENT_SECRET=5f0a2e75-10a3-4b11-a82f-8bf2349385e8 make client_cert
-```
-
-```bash
 scp ./docker/ssl/certs/ca.crt beagle@192.168.7.2:/home/beagle/ca.crt
-scp ./docker/ssl/certs/client.crt beagle@192.168.7.2:/home/beagle/client.crt
-scp ./docker/ssl/certs/client.key beagle@192.168.7.2:/home/beagle/client.key
 ```
 
 ```bash
-mosquitto_sub -u $CLIENT_ID -P $CLIENT_KEY -t m/$DOMAIN_ID/c/$CHANNEL_ID -I supermq -h $SUPERMQ_HOST --cafile ca.crt --cert client.crt --key client.key -p 8883
+mosquitto_sub -u $CLIENT_ID -P $CLIENT_KEY -t m/$DOMAIN_ID/c/$CHANNEL_ID -I supermq -h $SUPERMQ_HOST --cafile ca.crt -p 8883
 ```
 
 ```bash
-mosquitto_pub -u $CLIENT_ID -P $CLIENT_KEY -t m/$DOMAIN_ID/c/$CHANNEL_ID -I supermq -h $SUPERMQ_HOST --cafile ca.crt --cert client.crt --key client.key -p 8883 -m '[{"bn":"mqtt-device:","bu":"A","bver":5,"n":"voltage","u":"V","v":120.1}, {"n":"current","t":-2,"v":1.2}, {"n":"current","t":-1,"v":1.3}]'
+mosquitto_pub -u $CLIENT_ID -P $CLIENT_KEY -t m/$DOMAIN_ID/c/$CHANNEL_ID -I supermq -h $SUPERMQ_HOST --cafile ca.crt -p 8883 -m '[{"bn":"mqtt-device:","bu":"A","bver":5,"n":"voltage","u":"V","v":120.1}, {"n":"current","t":-2,"v":1.2}, {"n":"current","t":-1,"v":1.3}]'
 ```
 
 ## CoAP Client
@@ -69,7 +61,7 @@ scp ./build/coap-cli-linux-riscv64 beagle@192.168.7.2:/home/beagle/coap-cli
 ```
 
 ```bash
-export SUPERMQ_HOST="192.168.100.129"
+export SUPERMQ_HOST="messaging.magistrala.absmach.eu"
 export DOMAIN_ID="56a4462e-5001-4bcf-b421-dbbe3d59c53c"
 export CHANNEL_ID="0efb859c-f606-442d-9c9e-fd924cfee654"
 export CLIENT_ID="bd2733d1-fcda-4974-bd7b-63b87a2e150f"
@@ -89,7 +81,7 @@ coap-cli post m/$DOMAIN_ID/c/$CHANNEL_ID -a $CLIENT_KEY -H $SUPERMQ_HOST -d '[{"
 ```bash
 cd docker/ssl
 make all
-CN_SRV="192.168.100.129" CLIENT_SECRET=5f0a2e75-10a3-4b11-a82f-8bf2349385e8 make client_cert
+CN_SRV="messaging.magistrala.absmach.eu" CLIENT_SECRET=5f0a2e75-10a3-4b11-a82f-8bf2349385e8 make client_cert
 ```
 
 ```bash
@@ -109,7 +101,7 @@ coap-cli post m/$DOMAIN_ID/c/$CHANNEL_ID -a $CLIENT_KEY -H $SUPERMQ_HOST -p 5683
 ## HTTP Client
 
 ```bash
-export SUPERMQ_HOST="192.168.100.129"
+export SUPERMQ_HOST="messaging.magistrala.absmach.eu"
 export DOMAIN_ID="56a4462e-5001-4bcf-b421-dbbe3d59c53c"
 export CHANNEL_ID="0efb859c-f606-442d-9c9e-fd924cfee654"
 export CLIENT_ID="bd2733d1-fcda-4974-bd7b-63b87a2e150f"
