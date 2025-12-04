@@ -1,0 +1,17 @@
+config BR2_PACKAGE_PROPLET
+	bool "proplet"
+	depends on BR2_USE_WCHAR
+	depends on BR2_TOOLCHAIN_HAS_THREADS
+	depends on BR2_PACKAGE_WAMR
+	select BR2_PACKAGE_LIBCURL
+	select BR2_PACKAGE_OPENSSL
+	select BR2_PACKAGE_ZLIB
+	help
+	  Proplet is the edge runtime component of Propeller,
+	  enabling WebAssembly workload execution on constrained
+	  IoT and edge devices.
+
+	  https://github.com/absmach/propeller
+
+comment "proplet needs a toolchain w/ wchar, threads"
+	depends on !BR2_USE_WCHAR || !BR2_TOOLCHAIN_HAS_THREADS
