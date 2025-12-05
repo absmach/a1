@@ -26,10 +26,12 @@ Before setting up SuperMQ, you need to establish a connection to your S1 board.
 
 1. Connect the S1 board via USB-C cable
 2. Find the serial device:
+
    ```bash
    ls /dev/ttyUSB* /dev/ttyACM*
    # Usually /dev/ttyUSB0 or /dev/ttyACM0
    ```
+
 3. Connect using screen:
 
    ```bash
@@ -41,15 +43,20 @@ Before setting up SuperMQ, you need to establish a connection to your S1 board.
 4. Connect the S1 board to your computer via USB-C cable
 5. Power on the S1 board
 6. Find the serial device:
+
    ```bash
    ls /dev/tty.*
    # Look for something like /dev/tty.usbmodem1234BBBK56783
    ```
+
 7. Connect using screen:
+
    ```bash
    screen /dev/tty.usbmodem1234BBBK56783 115200
    ```
+
    If you get a `$TERM too long` error, use:
+
    ```bash
    TERM=xterm screen /dev/tty.usbmodem1234BBBK56783 115200
    ```
@@ -91,6 +98,7 @@ First, connect to the board via serial (Option 1) and configure network:
    ```
 
 4. **From your computer, SSH to that IP:**
+
    ```bash
    ssh beagle@192.168.8.133  # Use your actual IP
    ```
@@ -157,13 +165,13 @@ cd ../..
 
 Follow these steps to create the necessary resources. For complete CLI documentation, see the [SuperMQ CLI Documentation](https://docs.supermq.absmach.eu/cli).
 
-**Step 1: Create a User**
+#### Step 1: Create a User
 
 ```bash
 ./build/cli users create <username> <email> <password>
 ```
 
-**Step 2: Get User Token**
+#### Step 2: Get User Token
 
 ```bash
 ./build/cli users token <username> <password>
@@ -171,7 +179,7 @@ Follow these steps to create the necessary resources. For complete CLI documenta
 export USER_TOKEN=<your-user-token>
 ```
 
-**Step 3: Create a Domain**
+#### Step 3: Create a Domain
 
 ```bash
 ./build/cli domains create '{"name":"my-domain"}' $USER_TOKEN
@@ -179,7 +187,7 @@ export USER_TOKEN=<your-user-token>
 export DOMAIN_ID=<your-domain-id>
 ```
 
-**Step 4: Create a Client (Thing)**
+#### Step 4: Create a Client (Thing)
 
 ```bash
 ./build/cli clients create '{"name":"beaglev-sensor"}' $DOMAIN_ID $USER_TOKEN
@@ -188,7 +196,7 @@ export CLIENT_ID=<your-client-id>
 export CLIENT_KEY=<your-client-secret>
 ```
 
-**Step 5: Create a Channel**
+#### Step 5: Create a Channel
 
 ```bash
 ./build/cli channels create '{"name":"sensor-data"}' $DOMAIN_ID $USER_TOKEN
@@ -196,7 +204,7 @@ export CLIENT_KEY=<your-client-secret>
 export CHANNEL_ID=<your-channel-id>
 ```
 
-**Step 6: Connect Client to Channel**
+#### Step 6: Connect Client to Channel
 
 ```bash
 ./build/cli clients connect $CLIENT_ID $CHANNEL_ID '["publisher","subscriber"]' $DOMAIN_ID $USER_TOKEN
