@@ -1,53 +1,143 @@
-# S1 Documentation
+# s1
 
-This repo collects the collaborative work on S1 documentation. S1 RISC-V FPGA Linux gateway based on BeagleV-Fire
+S1 RISC-V FPGA Linux gateway based on BeagleV-Fire
 
-Documentation is auto-generated from Markdown files in this repo.
+# Propeller Buildroot External Tree
 
-[MkDocs](https://www.mkdocs.org/) is used to serve the docs locally with different theming.
+This is a Buildroot external tree for building a minimal Linux system with Proplet for BeagleV RISC-V boards.
 
-## Install
+## Quick Start
 
-Doc repo can be fetched from GitHub:
-
-```bash
-git clone https://github.com/absmach/beagle-docs.git
-```
-
-## Prerequisites
-
-[Python](https://www.python.org/downloads/) 3.11 or higher is required to run MkDocs.
-
-1. Create a virtual environment:
-
-   ```bash
-   python -m venv venv
-   ```
-
-2. Activate the virtual environment:
-
-   ```bash
-   source venv/bin/activate
-   ```
-
-3. Install [MkDocs](https://www.mkdocs.org/#installation)
-
-   ```bash
-   pip install mkdocs
-   ```
-
-4. Additionally, install [Material theme](https://squidfunk.github.io/mkdocs-material/):
-
-   ```bash
-   pip install mkdocs-material
-   ```
-
-## Usage
-
-Use MkDocs to serve documentation:
+### 1. Prerequisites
 
 ```bash
-mkdocs serve
+# Install build dependencies (Ubuntu/Debian)
+sudo apt-get update
+sudo apt-get install -y \
+    build-essential \
+    git \
+    wget \
+    cpio \
+    unzip \
+    rsync \
+    bc \
+    libncurses5-dev \
+    file
+
+# You'll need ~20GB free disk space and 2-4 hours for first build
 ```
 
-Then just point the browser to [http://127.0.0.1:8000](http://127.0.0.1:8000).
+### 2. Clone Buildroot
+
+```bash
+# Clone official Buildroot
+git clone https://git.buildroot.net/buildroot
+cd buildroot
+
+# Optional: Use a stable release
+git checkout 2024.11
+```
+
+### 3. Clone This External Tree
+
+```bash
+# From the buildroot parent directory
+cd ..
+git clone <your-repo-url> propeller-buildroot
+```
+
+Your directory structure should look like:
+
+```
+.
+├── buildroot/
+└── propeller-buildroot/
+```
+
+### 4. Configure Buildroot
+
+```bash
+cd buildroot
+
+# Load the BeagleV Proplet configuration
+make BR2_EXTERNAL=../propeller-buildroot beaglev_proplet_defconfig
+```
+
+### 5. Customize Configuration (Optional)
+
+```bash
+# Edit Proplet settings
+vi ../propeller-buildroot/package/proplet/proplet.env
+
+# Or use menuconfig to adjust build options
+make BR2_EXTERNAL=../propeller-buildroot menuconfig
+```
+
+### 6. Build
+
+```bash
+# Start the build (this will take 1-3 hours)
+make BR2_EXTERNAL=../propeller-buildroot
+
+# Or use parallel builds to speed up
+make -j$(nproc) BR2_EXTERNAL=../propeller-buildroot
+```
+
+### 7. Find Your Images
+
+```bash
+# After successful build, images are in:
+ls output/images/
+
+# Key files:
+# - rootfs.ext4      Root filesystem for eMMC
+# - Image            Linux kernel
+# - u-boot.itb       U-Boot bootloader (if built)
+# - *.dtb            Device tree blobs
+```
+
+---
+
+## What Gets Built
+
+This external tree adds:
+
+- **Proplet**: Edge computing agent with MQTT support
+- **Wasmtime**: WebAssembly runtime (v27.0.0)
+- **Custom configuration**: Optimized for BeagleV
+
+## Configuration
+
+### 1. SSH into BeagleV
+
+```bash
+ssh root@<beaglev-ip>
+# or
+ssh root@beaglev.local
+
+# Default password: (none) or check your build config
+```
+
+### 2. Edit Proplet Configuration
+
+```bash
+vi /etc/proplet/proplet.env
+
+# Update these values:
+SUPERMQ_BROKER_HOST=192.168.1.100  # Your laptop IP
+SUPERMQ_USERNAME=proplet
+SUPERMQ_PASSWORD=changeme
+PROPLET_ID=beaglev-001
+```
+
+### 3. Restart Proplet
+
+```bash
+systemctl restart proplet
+systemctl status proplet
+
+# Check logs
+journalctl -u proplet -f
+```
+
+---
