@@ -75,5 +75,3 @@ The custom PCB for S0 integrates multiple communication modules and power interf
 | GNSS Support      | Optional via SIM7080G for asset tracking |
 
 The S0 board serves as an extender, by adding these functionalities to the Beagle-V Fire
-
----

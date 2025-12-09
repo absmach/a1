@@ -10,11 +10,11 @@ To customize and flash the Beagle V Fire gateware, follow these steps:
 
 - Fork the BeagleV-Fire gateware repository on [GitLab](https://git.beagleboard.org/beaglev-fire/gateware).
 
-- Clone your fork:  
+- Clone your fork:
 
-   ```bash
-   git clone <your-namespace>/my-gateware.git
-   ```
+  ```bash
+  git clone <your-namespace>/my-gateware.git
+  ```
 
 - Create a build config YAML in `custom-fpga-design/` and set the `CAPE_OPTION` to your custom name.
 
@@ -26,15 +26,16 @@ To customize and flash the Beagle V Fire gateware, follow these steps:
 
 - In GitLab CI, download the build artifact (bitstream) from the pipeline.
 
-- Copy bitstream to the BeagleV-Fire:  
+- Copy bitstream to the BeagleV-Fire:
 
-   ```bash
-   scp my_custom_bitstream.zip beagle@<BeagleIP>:/home/beagle/
-   ```
+  ```bash
+  scp my_custom_bitstream.zip beagle@<BeagleIP>:/home/beagle/
+  ```
 
-- On the board:  
+- On the board:
 
-   ```bash
-   sudo /usr/share/beagleboard/gateware/change-gateware.sh ./my_custom_fpga_design
+  ```bash
+  sudo /usr/share/beagleboard/gateware/change-gateware.sh ./my_custom_fpga_design
+  ```
 
 More information on Flashing Gateware, follow [Beagle V Fire Gateware Flashing](https://docs.beagle.cc/boards/beaglev/fire/demos-and-tutorials/gateware/customize-cape-gateware-verilog.html)

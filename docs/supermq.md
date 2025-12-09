@@ -40,15 +40,21 @@ mosquitto_pub -u $CLIENT_ID -P $CLIENT_KEY -t m/$DOMAIN_ID/c/$CHANNEL_ID -I supe
 ### MQTTS
 
 ```bash
+cd docker/ssl
+make all
+CN_SRV="192.168.100.129" CLIENT_SECRET=5f0a2e75-10a3-4b11-a82f-8bf2349385e8 make client_cert
+
 scp ./docker/ssl/certs/ca.crt beagle@192.168.7.2:/home/beagle/ca.crt
+scp ./docker/ssl/certs/client.crt beagle@192.168.7.2:/home/beagle/client.crt
+scp ./docker/ssl/certs/client.key beagle@192.168.7.2:/home/beagle/client.key
 ```
 
 ```bash
-mosquitto_sub -u $CLIENT_ID -P $CLIENT_KEY -t m/$DOMAIN_ID/c/$CHANNEL_ID -I supermq -h $SUPERMQ_HOST --cafile ca.crt -p 8883
+mosquitto_sub -u $CLIENT_ID -P $CLIENT_KEY -t m/$DOMAIN_ID/c/$CHANNEL_ID -I supermq -h $SUPERMQ_HOST --cafile ca.crt --cert client.crt --key client.key -p 8883
 ```
 
 ```bash
-mosquitto_pub -u $CLIENT_ID -P $CLIENT_KEY -t m/$DOMAIN_ID/c/$CHANNEL_ID -I supermq -h $SUPERMQ_HOST --cafile ca.crt -p 8883 -m '[{"bn":"mqtt-device:","bu":"A","bver":5,"n":"voltage","u":"V","v":120.1}, {"n":"current","t":-2,"v":1.2}, {"n":"current","t":-1,"v":1.3}]'
+mosquitto_pub -u $CLIENT_ID -P $CLIENT_KEY -t m/$DOMAIN_ID/c/$CHANNEL_ID -I supermq -h $SUPERMQ_HOST --cafile ca.crt --cert client.crt --key client.key -p 8883 -m '[{"bn":"mqtt-device:","bu":"A","bver":5,"n":"voltage","u":"V","v":120.1}, {"n":"current","t":-2,"v":1.2}, {"n":"current","t":-1,"v":1.3}]'
 ```
 
 ## CoAP Client
@@ -124,3 +130,5 @@ curl -s -S -i --cacert ca.crt --cert client.crt --key client.key -X POST -H "Aut
 GOARCH=riscv64 GOOS=linux go build -ldflags "-s -w" -o supermq-go-client main.go
 scp ./supermq-go-client beagle@192.168.7.2:/home/beagle/supermq-go-client
 ```
+
+Code [example](docs/resources/supermq/main.go)

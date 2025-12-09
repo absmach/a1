@@ -16,10 +16,10 @@ markdown_extensions:
   - toc:
       permalink: "#"
 
-nav: 
+nav:
   - Overview: index.md
   - Features: features.md
   - Software:
       - S1 and SuperMQ: supermq.md
       - Gateware: gateware.md
-      
+  - GPIO: gpio.md

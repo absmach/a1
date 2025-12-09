@@ -34,8 +34,35 @@ beagle@BeagleV:~$ ls /dev/gpiochip*
 ## Download ESP32 AT Firmware
 
 ```bash
+
 ```
 
 Compile and flash the ESP32 AT firmware to your ESP32 module. Use the following [link](https://docs.espressif.com/projects/esp-at/en/latest/esp32/Compile_and_Develop/How_to_clone_project_and_compile_it.html)
 
+## Connect the ESP32 to the BeagleBone
 
+```python
+import time
+
+import serial
+
+ser = serial.Serial("/dev/ttyS1", 115200, timeout=1)
+
+print("Serial port opened. Type messages (Ctrl+C to exit):")
+
+try:
+    while True:
+        # Send data
+        message = input("Send: ")
+        ser.write((message + "\n").encode())
+
+        # Read response
+        time.sleep(0.1)
+        if ser.in_waiting:
+            response = ser.readline().decode("utf-8").strip()
+            print(f"Received: {response}")
+except KeyboardInterrupt:
+    print("\nClosing...")
+    ser.close()
+
+```
