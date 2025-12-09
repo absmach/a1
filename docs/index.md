@@ -4,6 +4,8 @@
 
 ## 📟 **S1**
 
+<!-- markdownlint-disable MD033 -->
+
 <video width="640" height="360" autoplay loop>
   <source src="images/s1.mp4" type="video/mp4">
   Your browser does not support the video tag.
