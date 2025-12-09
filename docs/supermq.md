@@ -1,6 +1,6 @@
 # Connect S1 Board as SuperMQ Client
 
-This guide demonstrates how to connect your BeagleV S1 board to a SuperMQ instance for IoT messaging and data management.
+This guide demonstrates how to connect your BeagleV S1 board to a [SuperMQ](https://docs.supermq.absmach.eu) instance for IoT messaging and data management.
 
 **Note on RISC-V Support**: SuperMQ is being enabled for RISC-V architecture. Until native RISC-V Docker images are available, run SuperMQ on an x86/ARM development machine and connect your S1 board to it for testing and development. This temporary setup allows you to develop IoT applications, test messaging protocols (MQTT, CoAP, HTTP), and work with SuperMQ's APIs while preparing for native deployment on the S1 board.
 
@@ -163,7 +163,7 @@ cd ../..
 
 ### 1.3 Provision SuperMQ Resources
 
-Follow these steps to create the necessary resources. For complete CLI documentation, see the [SuperMQ CLI Documentation](https://docs.supermq.absmach.eu/cli).
+Follow the steps to create the necessary resources(You need to provision users, clients, channels and a domain on supermq). For complete CLI documentation, see the [SuperMQ CLI Documentation](https://docs.supermq.absmach.eu/cli).
 
 #### Step 1: Create a User
 
@@ -187,7 +187,7 @@ export USER_TOKEN=<your-user-token>
 export DOMAIN_ID=<your-domain-id>
 ```
 
-#### Step 4: Create a Client (Thing)
+#### Step 4: Create a Client
 
 ```bash
 ./build/cli clients create '{"name":"beaglev-sensor"}' $DOMAIN_ID $USER_TOKEN
@@ -240,7 +240,7 @@ sudo apt install mosquitto-clients
 
 ### 2.2 Set Environment Variables
 
-On the BeagleV, configure the connection details using the values from Part 1:
+On the BeagleV, configure the connection details using the values from [Part 1](#part-1-setup-supermq-locally-on-your-x86arm-machine):
 
 ```bash
 export SUPERMQ_HOST=<your-computer-ip>      # From Step 1.4
@@ -264,6 +264,20 @@ Verify network connectivity:
 ping -c 4 $SUPERMQ_HOST
 ```
 
+Should result to:
+
+```bash
+PING <hostname> (<ip-address>) 56(84) bytes of data.
+64 bytes from <ip-address>: icmp_seq=1 ttl=XX time=YY ms
+64 bytes from <ip-address>: icmp_seq=2 ttl=XX time=YY ms
+64 bytes from <ip-address>: icmp_seq=3 ttl=XX time=YY ms
+64 bytes from <ip-address>: icmp_seq=4 ttl=XX time=YY ms
+
+--- <hostname> ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time ZZZ ms
+rtt min/avg/max/mdev = aaaa/bbbb/cccc/dddd ms
+```
+
 ## Part 3: Publish and Subscribe
 
 ### 3.1 Subscribe to Messages (On Your x86/ARM Machine)
@@ -274,6 +288,7 @@ Open a terminal on your x86/ARM computer and subscribe to the channel:
 mosquitto_sub -u $CLIENT_KEY -P "" -t "m/$DOMAIN_ID/c/$CHANNEL_ID/messages" -h localhost -v
 ```
 
+In this case, we have created a topic called messages and are subscribing to it
 This will wait and display any messages published to this channel.
 
 ### 3.2 Publish Messages (On BeagleV Board)
@@ -284,15 +299,7 @@ From your BeagleV board, publish sensor data:
 mosquitto_pub -u $CLIENT_KEY -P "" -t "m/$DOMAIN_ID/c/$CHANNEL_ID/messages" -h $SUPERMQ_HOST -m '{"temperature": 25.5, "humidity": 60}'
 ```
 
-You should see this message appear in your subscriber terminal!
-
-### 3.3 Publish Sensor Data in SenML Format
-
-SuperMQ supports the SenML (Sensor Markup Language) format:
-
-```bash
-mosquitto_pub -u $CLIENT_KEY -P "" -t "m/$DOMAIN_ID/c/$CHANNEL_ID/messages" -h $SUPERMQ_HOST -m '[{"bn":"beaglev-sensor:","bu":"A","bver":5,"n":"voltage","u":"V","v":3.3}, {"n":"current","u":"A","v":0.5}]'
-```
+You should see this message appear in your subscriber terminal
 
 ## Advanced: Secure Connections (MQTTS)
 
@@ -355,14 +362,14 @@ curl -X POST \
 
 ### Connection Refused
 
-- Verify SuperMQ is running on your x86/ARM machine: `docker ps` (should show multiple containers)
+- Verify SuperMQ is running on your x86/ARM machine: `docker ps` (should show multiple containers that are healthy)
 - Check your computer's firewall settings
 - Ensure MQTT port 1883 is accessible from the network
 
 ### Authentication Failed
 
 - Verify CLIENT_KEY is the **client secret**, not the client ID
-- Ensure the client is connected to the channel (Step 1.3, Part 6)
+- Ensure the client is connected to the channel [Step 1.3, Part 6](#step-6-connect-client-to-channel)
 - Check that the domain ID matches
 
 ### Messages Not Appearing
