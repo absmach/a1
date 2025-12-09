@@ -37,7 +37,7 @@ beagle@BeagleV:~$ ls /dev/gpiochip*
 
 ```
 
-Compile and flash the ESP32 AT firmware to your ESP32 module. Use the following [link](https://docs.espressif.com/projects/esp-at/en/latest/esp32/Compile_and_Develop/How_to_clone_project_and_compile_it.html)
+Compile and flash the ESP32 AT firmware to your ESP32 module. Use the following [ESP32-AT-Documentation](https://docs.espressif.com/projects/esp-at/en/latest/esp32/Compile_and_Develop/How_to_clone_project_and_compile_it.html)
 
 ## Connect the ESP32 to the BeagleBone
 
