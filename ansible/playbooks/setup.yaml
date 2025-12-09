@@ -37,7 +37,14 @@
           - make
           - vim
           - htop
-          - btop
-          - docker-compose
+          - screen
+          - python3
+          - python3-pip
         state: present
-  
+
+    - name: Install Python Libraries
+      ansible.builtin.pip:
+        name:
+          - pyserial
+          - requests
+        state: present
