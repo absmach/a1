@@ -149,37 +149,38 @@ Wait for all containers to start (check with `docker ps`).
 
 ### 1.2 Install SuperMQ CLI
 
-The CLI tool helps you provision users, domains, clients, and channels:
+The CLI tool is required to provision users, domains, clients, and channels:
 
-```bash
-# Download the CLI
-make cli
+- Download and install from: [SuperMQ Repository](https://github.com/absmach/supermq/releases)
+- Verify installation: `./build/supermq-cli --help` (should return some common CLI commands)
 
-# Or build from source
-cd cmd/cli
-go build -o ../../build/cli main.go
-cd ../..
-```
+You can also [build from source](https://docs.magistrala.absmach.eu/dev-guide/cli/introduction-to-cli#option-2--build-from-source)
 
 ### 1.3 Provision SuperMQ Resources
 
 Follow the steps to create the necessary resources(You need to provision users, clients, channels and a domain on supermq). For complete CLI documentation, see the [SuperMQ CLI Documentation](https://docs.supermq.absmach.eu/cli).
 
-#### Step 1: Create a User
+> **Note:** For detailed CLI command reference, see the [SuperMQ CLI Documentation](https://docs.supermq.absmach.eu/cli/).
+
+### Step 1: Create a User
 
 ```bash
 ./build/cli users create <username> <email> <password>
 ```
 
-#### Step 2: Get User Token
+_Reference: [Users Management](https://docs.supermq.absmach.eu/cli/#users-management)_
+
+### Step 2: Get User Token
 
 ```bash
 ./build/cli users token <username> <password>
-# Save this access token as token as USER_TOKEN
+# Save this access token as USER_TOKEN
 export USER_TOKEN=<your-user-token>
 ```
 
-#### Step 3: Create a Domain
+_Reference: [Users Management](https://docs.supermq.absmach.eu/cli/#users-management)_
+
+### Step 3: Create a Domain
 
 ```bash
 ./build/cli domains create '{"name":"my-domain"}' $USER_TOKEN
@@ -187,7 +188,9 @@ export USER_TOKEN=<your-user-token>
 export DOMAIN_ID=<your-domain-id>
 ```
 
-#### Step 4: Create a Client
+_Reference: [Domains Management](https://docs.supermq.absmach.eu/cli/#domain-management)_
+
+### Step 4: Create a Client
 
 ```bash
 ./build/cli clients create '{"name":"beaglev-sensor"}' $DOMAIN_ID $USER_TOKEN
@@ -196,7 +199,9 @@ export CLIENT_ID=<your-client-id>
 export CLIENT_KEY=<your-client-secret>
 ```
 
-#### Step 5: Create a Channel
+_Reference: [Clients Management](https://docs.supermq.absmach.eu/cli/#clients-management)_
+
+### Step 5: Create a Channel
 
 ```bash
 ./build/cli channels create '{"name":"sensor-data"}' $DOMAIN_ID $USER_TOKEN
@@ -204,11 +209,15 @@ export CLIENT_KEY=<your-client-secret>
 export CHANNEL_ID=<your-channel-id>
 ```
 
-#### Step 6: Connect Client to Channel
+_Reference: [Channels Management](https://docs.supermq.absmach.eu/cli/#channels-management)_
+
+### Step 6: Connect Client to Channel
 
 ```bash
 ./build/cli clients connect $CLIENT_ID $CHANNEL_ID '["publisher","subscriber"]' $DOMAIN_ID $USER_TOKEN
 ```
+
+_Reference: [Clients Management](https://docs.supermq.absmach.eu/cli/#clients-management)_
 
 ### 1.4 Find Your Computer's IP Address
 
