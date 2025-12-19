@@ -164,58 +164,35 @@ Follow the steps to create the necessary resources(You need to provision users, 
 
 ### Step 1: Create a User
 
-```bash
-./build/cli users create <username> <email> <password>
-```
+Create a user using the CLI.
 
 _Reference: [Users Management](https://docs.supermq.absmach.eu/cli/#users-management)_
 
 ### Step 2: Get User Token
 
-```bash
-./build/cli users token <username> <password>
-# Save this access token as USER_TOKEN
-export USER_TOKEN=<your-user-token>
-```
+Get a user token using the CLI.
 
 _Reference: [Users Management](https://docs.supermq.absmach.eu/cli/#users-management)_
 
 ### Step 3: Create a Domain
 
-```bash
-./build/cli domains create '{"name":"my-domain"}' $USER_TOKEN
-# Note the domain ID from the response
-export DOMAIN_ID=<your-domain-id>
-```
+Create a domain using the CLI.
 
 _Reference: [Domains Management](https://docs.supermq.absmach.eu/cli/#domain-management)_
 
 ### Step 4: Create a Client
 
-```bash
-./build/cli clients create '{"name":"beaglev-sensor"}' $DOMAIN_ID $USER_TOKEN
-# Note the client ID and secret from the response
-export CLIENT_ID=<your-client-id>
-export CLIENT_KEY=<your-client-secret>
-```
+Create a client using the CLI.
 
 _Reference: [Clients Management](https://docs.supermq.absmach.eu/cli/#clients-management)_
 
 ### Step 5: Create a Channel
 
-```bash
-./build/cli channels create '{"name":"sensor-data"}' $DOMAIN_ID $USER_TOKEN
-# Note the channel ID from the response
-export CHANNEL_ID=<your-channel-id>
-```
+Create a channel using the CLI.
 
 _Reference: [Channels Management](https://docs.supermq.absmach.eu/cli/#channels-management)_
 
 ### Step 6: Connect Client to Channel
-
-```bash
-./build/cli clients connect $CLIENT_ID $CHANNEL_ID '["publisher","subscriber"]' $DOMAIN_ID $USER_TOKEN
-```
 
 _Reference: [Clients Management](https://docs.supermq.absmach.eu/cli/#clients-management)_
 
@@ -394,25 +371,3 @@ curl -X POST \
 - [Clients Management](https://docs.supermq.absmach.eu/cli#clients-management)
 - [Channels Management](https://docs.supermq.absmach.eu/cli#channels-management)
 - [SenML Format Specification](https://tools.ietf.org/html/rfc8428)
-
-## Quick Reference Commands
-
-```bash
-# Create user and get token
-./build/cli users create <username> <email> <password>
-./build/cli users token <username> <password>
-
-# Create resources
-./build/cli domains create '{"name":"<domain-name>"}' $USER_TOKEN
-./build/cli clients create '{"name":"<client-name>"}' $DOMAIN_ID $USER_TOKEN
-./build/cli channels create '{"name":"<channel-name>"}' $DOMAIN_ID $USER_TOKEN
-
-# Connect client to channel
-./build/cli clients connect $CLIENT_ID $CHANNEL_ID '["publisher","subscriber"]' $DOMAIN_ID $USER_TOKEN
-
-# Publish from BeagleV Board
-mosquitto_pub -u $CLIENT_KEY -P "" -t "m/$DOMAIN_ID/c/$CHANNEL_ID/messages" -h $SUPERMQ_HOST -m '{"sensor":"data"}'
-
-# Subscribe on x86/ARM machine
-mosquitto_sub -u $CLIENT_KEY -P "" -t "m/$DOMAIN_ID/c/$CHANNEL_ID/messages" -h localhost -v
-```
