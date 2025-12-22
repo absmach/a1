@@ -1,2 +1,2 @@
-source "$BR2_EXTERNAL_PROPELLER_PATH/package/wasmtime/Config.in"
-source "$BR2_EXTERNAL_PROPELLER_PATH/package/proplet/Config.in"
+source "$BR2_EXTERNAL_PROPELLER_PROPLET_PATH/package/wasmtime/Config.in"
+source "$BR2_EXTERNAL_PROPELLER_PROPLET_PATH/package/proplet/Config.in"

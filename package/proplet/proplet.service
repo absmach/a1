@@ -1,45 +1,13 @@
 [Unit]
-Description=Propeller Proplet - WebAssembly Edge Worker
-Documentation=https://docs.propeller.absmach.eu/
-After=network-online.target
-Wants=network-online.target
+Description=Proplet Agent
+After=network.target
 
 [Service]
 Type=simple
-User=proplet
-Group=proplet
-
-# Load configuration
-EnvironmentFile=/etc/proplet/proplet.env
-
-# Start proplet
+EnvironmentFile=/etc/proplet.conf
 ExecStart=/usr/bin/proplet
-
-# Restart policy
 Restart=on-failure
-RestartSec=10
-StartLimitInterval=300
-StartLimitBurst=5
-
-# Logging
-StandardOutput=journal
-StandardError=journal
-SyslogIdentifier=proplet
-
-# Security hardening
-NoNewPrivileges=true
-PrivateTmp=true
-ProtectSystem=strict
-ProtectHome=true
-ReadWritePaths=/var/lib/proplet /var/log/proplet /tmp/proplet
-
-# Resource limits
-LimitNOFILE=65536
-LimitNPROC=512
-
-# Capabilities
-AmbientCapabilities=CAP_NET_BIND_SERVICE
-CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target

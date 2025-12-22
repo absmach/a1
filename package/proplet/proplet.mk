@@ -1,6 +1,6 @@
 ################################################################################
 #
-# proplet - Propeller edge worker (RISC-V compatible)
+# proplet
 #
 ################################################################################
 
@@ -8,73 +8,33 @@ PROPLET_VERSION = main
 PROPLET_SITE = $(call github,absmach,propeller,$(PROPLET_VERSION))
 PROPLET_LICENSE = Apache-2.0
 PROPLET_LICENSE_FILES = LICENSE
+PROPLET_SUBDIR = proplet
 
-PROPLET_GOMOD = github.com/absmach/propeller
+PROPLET_LDFLAGS = -s -w
 
-# Dependencies - minimal for edge device
-PROPLET_DEPENDENCIES = \
-	wasmtime \
-	host-pkgconf \
-	openssl \
-	ca-certificates
-
-# CGO enabled for Wasmtime integration
-PROPLET_GO_ENV = CGO_ENABLED=1
-
-# Build flags from Propeller Makefile
-PROPLET_TIME = $(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
-PROPLET_LDFLAGS = -s -w \
-	-X 'github.com/absmach/supermq.BuildTime=$(PROPLET_TIME)' \
-	-X 'github.com/absmach/supermq.Version=$(PROPLET_VERSION)' \
-	-X 'github.com/absmach/supermq.Commit=$(PROPLET_VERSION)'
-
-# PKG_CONFIG for Wasmtime cross-compilation
-PROPLET_GO_ENV += \
-	PKG_CONFIG_PATH="$(STAGING_DIR)/usr/lib/pkgconfig" \
-	PKG_CONFIG_SYSROOT_DIR="$(STAGING_DIR)"
-
-# Build proplet binary only
-# Following Makefile: cmd/proplet/main.go -> build/proplet
 define PROPLET_BUILD_CMDS
-	mkdir -p $(@D)/build && \
-	cd $(@D) && \
-	$(TARGET_MAKE_ENV) \
-	$(PROPLET_GO_ENV) \
-	GOOS=linux \
-	GOARCH=riscv64 \
-	CC=$(TARGET_CC) \
-	CXX=$(TARGET_CXX) \
-	CGO_CFLAGS="$(TARGET_CFLAGS)" \
-	CGO_LDFLAGS="$(TARGET_LDFLAGS) -L$(STAGING_DIR)/usr/lib" \
-	$(GO_BIN) build \
+	$(TARGET_MAKE_ENV) $(HOST_GO_TARGET_ENV) \
+		CGO_ENABLED=0 \
+		$(HOST_DIR)/bin/go build -v -o $(@D)/proplet \
 		-ldflags "$(PROPLET_LDFLAGS)" \
-		-o $(@D)/build/proplet \
-		./cmd/proplet/main.go
+		$(PROPLET_SITE_METHOD)://$(PROPLET_SITE)/proplet
 endef
 
-# Install binary and configuration
 define PROPLET_INSTALL_TARGET_CMDS
-	$(INSTALL) -D -m 0755 $(@D)/build/proplet \
-		$(TARGET_DIR)/usr/bin/proplet
-	
-	# Install default configuration template
-	$(INSTALL) -D -m 0644 $(PROPLET_PKGDIR)/proplet.env \
-		$(TARGET_DIR)/etc/proplet/proplet.env
-	
-	# Create directories
-	mkdir -p $(TARGET_DIR)/var/lib/proplet/wasm-cache
-	mkdir -p $(TARGET_DIR)/var/log/proplet
+	$(INSTALL) -D -m 0755 $(@D)/proplet $(TARGET_DIR)/usr/bin/proplet
 endef
 
-# Install systemd service
+# Install init script if systemd or sysvinit
 define PROPLET_INSTALL_INIT_SYSTEMD
-	$(INSTALL) -D -m 0644 $(PROPLET_PKGDIR)/proplet.service \
+	$(INSTALL) -D -m 0644 $(BR2_EXTERNAL_PROPELLER_PROPLET_PATH)/package/proplet/proplet.service \
 		$(TARGET_DIR)/usr/lib/systemd/system/proplet.service
 endef
 
-# Create proplet user
-define PROPLET_USERS
-	proplet -1 proplet -1 * /var/lib/proplet - - Propeller Proplet
+define PROPLET_INSTALL_CONFIG
+	$(INSTALL) -D -m 0644 $(BR2_EXTERNAL_PROPELLER_PROPLET_PATH)/package/proplet/proplet.conf \
+		$(TARGET_DIR)/etc/proplet.conf
 endef
+
+PROPLET_POST_INSTALL_TARGET_HOOKS += PROPLET_INSTALL_CONFIG
 
 $(eval $(golang-package))
