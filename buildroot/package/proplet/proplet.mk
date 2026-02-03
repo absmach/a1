@@ -33,7 +33,7 @@ endef
 
 define PROPLET_INSTALL_CONFIG
 	$(INSTALL) -D -m 0644 $(BR2_EXTERNAL_PROPELLER_PROPLET_PATH)/package/proplet/proplet.conf \
-		$(TARGET_DIR)/etc/proplet.conf
+		$(TARGET_DIR)/etc/proplet/proplet.conf
 endef
 
 PROPLET_POST_INSTALL_TARGET_HOOKS += PROPLET_INSTALL_CONFIG

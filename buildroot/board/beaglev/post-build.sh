@@ -30,7 +30,7 @@ chown -R 1000:1000 ${TARGET_DIR}/var/lib/proplet 2>/dev/null || true
 chown -R 1000:1000 ${TARGET_DIR}/var/log/proplet 2>/dev/null || true
 chmod 1777 ${TARGET_DIR}/tmp/proplet 2>/dev/null || true
 chmod 755 ${TARGET_DIR}/usr/bin/proplet 2>/dev/null || true
-chmod 644 ${TARGET_DIR}/etc/proplet/proplet.env 2>/dev/null || true
+chmod 644 ${TARGET_DIR}/etc/proplet/proplet.conf 2>/dev/null || true
 
 # Enable proplet service
 if [ -d "${TARGET_DIR}/etc/systemd/system" ]; then
@@ -46,12 +46,14 @@ echo "=============================================="
 echo "IMPORTANT: Configuration Required!"
 echo "=============================================="
 echo "After booting BeagleV, you MUST edit:"
-echo "  /etc/proplet/proplet.env"
+echo "  /etc/proplet/proplet.conf"
 echo ""
 echo "Update these values:"
-echo "  SUPERMQ_BROKER_HOST=YOUR_LAPTOP_IP"
-echo "  SUPERMQ_USERNAME=your_username"
-echo "  SUPERMQ_PASSWORD=your_password"
+echo "  PROPLET_MQTT_ADDRESS=tcp://YOUR_BROKER_IP:1883"
+echo "  PROPLET_DOMAIN_ID=your-domain-id"
+echo "  PROPLET_CHANNEL_ID=your-channel-id"
+echo "  PROPLET_CLIENT_ID=your-client-id"
+echo "  PROPLET_CLIENT_KEY=your-client-key"
 echo ""
 echo "Then restart proplet:"
 echo "  systemctl restart proplet"

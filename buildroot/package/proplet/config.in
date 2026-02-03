@@ -2,9 +2,14 @@ config BR2_PACKAGE_PROPLET
 	bool "proplet"
 	depends on BR2_PACKAGE_HOST_RUSTC_TARGET_ARCH_SUPPORTS
 	select BR2_PACKAGE_HOST_RUSTC
+	select BR2_PACKAGE_WASMTIME
+	select BR2_PACKAGE_OPENSSL
 	help
 	  Proplet is a lightweight worker service that executes
 	  WebAssembly workloads on edge devices. Written in Rust.
+	  
+	  It connects to a SuperMQ/Magistrala broker via MQTT and
+	  receives WASM workloads to execute using Wasmtime runtime.
 
 	  https://github.com/absmach/propeller
 

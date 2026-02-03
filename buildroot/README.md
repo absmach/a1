@@ -67,7 +67,7 @@ make BR2_EXTERNAL=../propeller-buildroot beaglev_proplet_defconfig
 
 ```bash
 # Edit Proplet settings
-vi ../propeller-buildroot/package/proplet/proplet.env
+vi ../propeller-buildroot/package/proplet/proplet.conf
 
 # Or use menuconfig to adjust build options
 make BR2_EXTERNAL=../propeller-buildroot menuconfig
@@ -121,13 +121,14 @@ ssh root@beaglev.local
 ### 2. Edit Proplet Configuration
 
 ```bash
-vi /etc/proplet/proplet.env
+vi /etc/proplet/proplet.conf
 
 # Update these values:
-SUPERMQ_BROKER_HOST=192.168.1.100  # Your laptop IP
-SUPERMQ_USERNAME=proplet
-SUPERMQ_PASSWORD=changeme
-PROPLET_ID=beaglev-001
+PROPLET_MQTT_ADDRESS=tcp://192.168.1.100:1883  # Your broker IP
+PROPLET_DOMAIN_ID=your-domain-id
+PROPLET_CHANNEL_ID=your-channel-id
+PROPLET_CLIENT_ID=your-client-id
+PROPLET_CLIENT_KEY=your-client-key
 ```
 
 ### 3. Restart Proplet

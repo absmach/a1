@@ -1,13 +1,25 @@
 [Unit]
 Description=Proplet Agent
-After=network.target
+After=network.target network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
-EnvironmentFile=/etc/proplet.conf
+EnvironmentFile=/etc/proplet/proplet.conf
 ExecStart=/usr/bin/proplet
 Restart=on-failure
 RestartSec=5s
+User=proplet
+Group=proplet
+
+# Working directory for WASM workloads
+WorkingDirectory=/var/lib/proplet
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/proplet /var/log/proplet /tmp/proplet
 
 [Install]
 WantedBy=multi-user.target
