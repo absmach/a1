@@ -1,0 +1,13 @@
+config BR2_PACKAGE_WASMTIME
+	bool "wasmtime"
+	depends on BR2_PACKAGE_HOST_RUSTC_TARGET_ARCH_SUPPORTS
+	select BR2_PACKAGE_HOST_RUSTC
+	help
+	  Wasmtime is a standalone runtime for WebAssembly, using the
+	  Cranelift JIT compiler. It provides a fast, secure, and
+	  lightweight execution environment for WebAssembly modules.
+
+	  https://wasmtime.dev/
+
+comment "wasmtime needs a Rust toolchain"
+	depends on !BR2_PACKAGE_HOST_RUSTC_TARGET_ARCH_SUPPORTS
