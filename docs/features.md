@@ -2,7 +2,7 @@
 
 ## 🔧 **Hardware Architecture**
 
-In the S1 IoT Gateway architecture:
+In the A1 IoT Gateway architecture:
 
 🧠 BeagleV-Fire acts as the central controller, running Linux to manage device coordination, networking, and cloud communication.
 
@@ -18,7 +18,7 @@ In the S1 IoT Gateway architecture:
 
 The BeagleV-Fire is a powerful, open-source RISC-V single-board computer developed by BeagleBoard.org. It is designed for embedded Linux, FPGA acceleration, and edge computing applications.
 
-Below are key features that make it ideal as the main controller in the S1 IoT Gateway:
+Below are key features that make it ideal as the main controller in the A1 IoT Gateway:
 
 🧩 **Beagle-V Fire Specifications**
 

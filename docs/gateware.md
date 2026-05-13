@@ -4,7 +4,7 @@ Gateware refers to the digital logic configuration that defines how an FPGA beha
 
 On the BeagleV-Fire, the gateware configures the FPGA fabric to enable hardware-level functionalities such as GPIO, UART, SPI, and custom logic extensions that work alongside the Linux-running RISC-V processor.
 
-By customizing the gateware, you can tailor the BeagleV-Fire’s hardware capabilities for specific applications, such as enhanced I/O performance or specialized communication interfaces for the S1 Gateway.
+By customizing the gateware, you can tailor the BeagleV-Fire’s hardware capabilities for specific applications, such as enhanced I/O performance or specialized communication interfaces for the A1 Gateway.
 
 To customize and flash the Beagle V Fire gateware, follow these steps:
 
