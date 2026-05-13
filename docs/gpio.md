@@ -1,4 +1,4 @@
-# Extend the BeagleBone with S0
+# Extend the BeagleBone with A0
 
 ## Identify the Available Interfaces Between BeagleBoard-V and Your HAT
 

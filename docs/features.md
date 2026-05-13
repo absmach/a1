@@ -6,7 +6,7 @@ In the A1 IoT Gateway architecture:
 
 🧠 BeagleV-Fire acts as the central controller, running Linux to manage device coordination, networking, and cloud communication.
 
-🔄 It receives metering data from the S0 (ESP32-C6) over UART or another serial interface.
+🔄 It receives metering data from the A0 (ESP32-C6) over UART or another serial interface.
 
 ☁️ Processes, aggregates, and forwards data securely to SuperMQ via MQTT, MQTTS, HTTP, HTTPS, CoAP and CoAP DTLS.
 
@@ -56,15 +56,15 @@ Below are key features that make it ideal as the main controller in the A1 IoT G
 
 - HDMI output support (on compatible models)
 
-## ⚙️ **S0 Features**
+## ⚙️ **A0 Features**
 
-The S0 provides support for the following communication interfaces:
+The A0 provides support for the following communication interfaces:
 
 - 📶 **Wireless M-Bus (868 MHz)** via the **RC-S2LP module**
 - 🌐 **NB-IoT / LTE-M** via the **SIM7080G** module for cellular connectivity
 - 🌍 **Internet connectivity** via ESP32C6 WiFi capabilities and Ethernet via Beagle-V Fire
 
-The custom PCB for S0 integrates multiple communication modules and power interfaces designed for industrial deployment:
+The custom PCB for A0 integrates multiple communication modules and power interfaces designed for industrial deployment:
 
 | Component         | Description                              |
 | ----------------- | ---------------------------------------- |
@@ -74,4 +74,4 @@ The custom PCB for S0 integrates multiple communication modules and power interf
 | USB-C & Terminals | For power and debug                      |
 | GNSS Support      | Optional via SIM7080G for asset tracking |
 
-The S0 board serves as an extender, by adding these functionalities to the Beagle-V Fire
+The A0 board serves as an extender, by adding these functionalities to the Beagle-V Fire

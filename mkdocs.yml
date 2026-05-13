@@ -1,7 +1,7 @@
 copyright: Copyright (c) Abstract Machines
 repo_url: https://github.com/absmach/beagle-docs.git
-site_description: S1 Documentation
-site_name: S1
+site_description: A1 Documentation
+site_name: A1
 site_url: ""
 edit_uri: ""
 
@@ -20,6 +20,6 @@ nav:
   - Overview: index.md
   - Features: features.md
   - Software:
-      - S1 and SuperMQ: supermq.md
+      - A1 and SuperMQ: supermq.md
       - Gateware: gateware.md
   - GPIO: gpio.md
