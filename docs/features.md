@@ -8,7 +8,7 @@ In the S1 IoT Gateway architecture:
 
 🔄 It receives metering data from the S0 (ESP32-C6) over UART or another serial interface.
 
-☁️ Processes, aggregates, and forwards data securely to SuperMQ via MQTT, MQTTS, HTTP, HTTPS, CoAP and CoAP DTLS.
+☁️ Processes, aggregates, and forwards data securely to Magistrala via MQTT, MQTTS, HTTP, HTTPS, CoAP and CoAP DTLS.
 
 🔐 Handles system-level services such as security, data persistence, logging, and firmware updates.
 

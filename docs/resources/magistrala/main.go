@@ -105,7 +105,7 @@ func publishMQTT(cfg Config, data []SenMLRecord) error {
 
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(fmt.Sprintf("tcp://%s:1883", cfg.Host))
-	opts.SetClientID("supermq-go-client")
+	opts.SetClientID("magistrala-go-client")
 	opts.SetUsername(cfg.ClientID)
 	opts.SetPassword(cfg.ClientKey)
 	opts.SetConnectionLostHandler(func(c mqtt.Client, err error) {
@@ -193,10 +193,10 @@ func publishCoAP(cfg Config, data []SenMLRecord) error {
 }
 
 func main() {
-	log.Println("Starting SuperMQ Multi-Protocol Publisher...")
+	log.Println("Starting Magistrala Multi-Protocol Publisher...")
 
 	cfg := Config{
-		Host:      os.Getenv("SUPERMQ_HOST"),
+		Host:      os.Getenv("MAGISTRALA_HOST"),
 		DomainID:  os.Getenv("DOMAIN_ID"),
 		ChannelID: os.Getenv("CHANNEL_ID"),
 		ClientID:  os.Getenv("CLIENT_ID"),
