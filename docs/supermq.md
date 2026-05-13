@@ -1,8 +1,8 @@
-# Connect S1 Board as SuperMQ Client
+# Connect A1 Board as SuperMQ Client
 
-This guide demonstrates how to connect your BeagleV S1 board to a [SuperMQ](https://docs.supermq.absmach.eu) instance for IoT messaging and data management.
+This guide demonstrates how to connect your BeagleV A1 board to a [SuperMQ](https://docs.supermq.absmach.eu) instance for IoT messaging and data management.
 
-**Note on RISC-V Support**: SuperMQ is being enabled for RISC-V architecture. Until native RISC-V Docker images are available, run SuperMQ on an x86/ARM development machine and connect your S1 board to it for testing and development. This temporary setup allows you to develop IoT applications, test messaging protocols (MQTT, CoAP, HTTP), and work with SuperMQ's APIs while preparing for native deployment on the S1 board.
+**Note on RISC-V Support**: SuperMQ is being enabled for RISC-V architecture. Until native RISC-V Docker images are available, run SuperMQ on an x86/ARM development machine and connect your A1 board to it for testing and development. This temporary setup allows you to develop IoT applications, test messaging protocols (MQTT, CoAP, HTTP), and work with SuperMQ's APIs while preparing for native deployment on the A1 board.
 
 ## Architecture Overview
 
@@ -11,20 +11,20 @@ This guide demonstrates how to connect your BeagleV S1 board to a [SuperMQ](http
 
 ## Prerequisites
 
-- A BeagleV S1 board
+- A BeagleV A1 board
 - Docker and Docker Compose installed on your x86/ARM computer
 - Both your computer and BeagleV on the same network
-- USB-C cable or Ethernet cable for connecting the S1 board
+- USB-C cable or Ethernet cable for connecting the A1 board
 
-## Connecting to Your BeagleV S1 Board
+## Connecting to Your BeagleV A1 Board
 
-Before setting up SuperMQ, you need to establish a connection to your S1 board.
+Before setting up SuperMQ, you need to establish a connection to your A1 board.
 
 ### Option 1: USB Serial Connection
 
 **On Linux:**
 
-1. Connect the S1 board via USB-C cable
+1. Connect the A1 board via USB-C cable
 2. Find the serial device:
 
    ```bash
@@ -40,8 +40,8 @@ Before setting up SuperMQ, you need to establish a connection to your S1 board.
 
    **On macOS:**
 
-4. Connect the S1 board to your computer via USB-C cable
-5. Power on the S1 board
+4. Connect the A1 board to your computer via USB-C cable
+5. Power on the A1 board
 6. Find the serial device:
 
    ```bash
@@ -70,7 +70,7 @@ Before setting up SuperMQ, you need to establish a connection to your S1 board.
 
 ### Option 2: SSH Connection
 
-Once your S1 board has network connectivity, SSH is more convenient for multiple terminal sessions.
+Once your A1 board has network connectivity, SSH is more convenient for multiple terminal sessions.
 
 **Via USB Network:**
 
@@ -82,7 +82,7 @@ ssh beagle@192.168.7.2
 
 First, connect to the board via serial (Option 1) and configure network:
 
-1. **Connect Ethernet cable** from your router to the S1 board
+1. **Connect Ethernet cable** from your router to the A1 board
 
 2. **Get an IP address:**
 
@@ -103,9 +103,9 @@ First, connect to the board via serial (Option 1) and configure network:
    ssh beagle@192.168.8.133  # Use your actual IP
    ```
 
-### Enabling Internet Access on S1 Board
+### Enabling Internet Access on A1 Board
 
-Your S1 board needs internet access to install packages like mosquitto-clients.
+Your A1 board needs internet access to install packages like mosquitto-clients.
 
 **If connected via Ethernet:**
 The board should automatically get internet access via DHCP:
@@ -121,7 +121,7 @@ Enable internet sharing on your computer:
 
 - **Linux:** Use `iptables` and IP forwarding (varies by distribution)
 
-Then on the S1 board:
+Then on the A1 board:
 
 ```bash
 sudo ip route add default via 192.168.7.1 dev usb0
