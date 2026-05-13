@@ -344,7 +344,6 @@ scp ./build/coap-cli-linux-riscv64 beagle@<beaglev-ip>:/home/beagle/coap-cli
 coap-cli get m/$DOMAIN_ID/c/$CHANNEL_ID -a $CLIENT_KEY -H $MAGISTRALA_HOST -o
 ```
 
-With this, that is how you conne
 ### HTTP Client
 
 **Publish via HTTP from BeagleV Board:**
@@ -357,30 +356,10 @@ curl -X POST \
   -d '[{"bn":"http-device:","n":"temperature","u":"Cel","v":25.5}]'
 ```
 
-## Troubleshooting
-
-### Connection Refused
-
-- Verify Magistrala is running on your x86/ARM machine: `docker ps` (should show multiple containers that are healthy)
-- Check your computer's firewall settings
-- Ensure MQTT port 1883 is accessible from the network
-
-### Authentication Failed
-
-- Verify CLIENT_KEY is the **client secret**, not the client ID
-- Ensure the client is connected to the channel [Step 1.3, Part 6](#step-6-connect-client-to-channel)
-- Check that the domain ID matches
-
-### Messages Not Appearing
-
-- Ensure subscriber and publisher use the **exact same topic**
-- Verify both are using the same DOMAIN_ID and CHANNEL_ID
-- Check Magistrala logs: `docker logs Magistrala-mqtt`
-
 ## Additional Resources
 
-- [Magistrala Documentation](https://docs.Magistrala.absmach.eu/)
-- [Magistrala CLI Reference](https://docs.Magistrala.absmach.eu/cli)
-- [Clients Management](https://docs.Magistrala.absmach.eu/cli#clients-management)
-- [Channels Management](https://docs.Magistrala.absmach.eu/cli#channels-management)
+- [Magistrala Documentation](https://docs.magistrala.absmach.eu/)
+- [Magistrala CLI Reference](https://docs.magistrala.absmach.eu/cli)
+- [Clients Management](https://docs.magistrala.absmach.eu/cli#clients-management)
+- [Channels Management](https://docs.magistrala.absmach.eu/cli#channels-management)
 - [SenML Format Specification](https://tools.ietf.org/html/rfc8428)
