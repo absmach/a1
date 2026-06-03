@@ -1,0 +1,9 @@
+- name: Ping all hosts
+  hosts: "beaglebone-v-fire"
+  tasks:
+    - name: Ping all hosts
+      ansible.builtin.ping:
+
+    - name: Print message
+      ansible.builtin.debug:
+        msg: Hello world

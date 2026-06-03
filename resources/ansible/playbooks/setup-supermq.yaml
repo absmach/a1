@@ -1,0 +1,17 @@
+- name: Setup Beagle Board V Fire
+  hosts: "beaglebone-v-fire"
+  become: true
+  tasks:
+    - name: Clone a repo with separate git directory
+      ansible.builtin.git:
+        clone: true
+        repo: https://github.com/absmach/magistrala.git
+        dest: /home/beagle/magistrala
+
+    - name: Change directory to the repo
+      ansible.builtin.shell:
+        cmd: cd /home/beagle/magistrala
+
+    - name: Pull the latest docker images
+      ansible.builtin.shell:
+        cmd: docker-compose -f docker/docker-compose.yaml pull

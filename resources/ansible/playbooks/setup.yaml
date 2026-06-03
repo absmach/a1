@@ -1,0 +1,50 @@
+- name: Setup Beagle Board V Fire
+  hosts: "beaglebone-v-fire"
+  become: true
+  tasks:
+    - name: Update package lists
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Update all packages to their latest version
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+
+    - name: Remove useless packages from the cache
+      ansible.builtin.apt:
+        autoclean: true
+
+    - name: Remove dependencies that are no longer required and purge their configuration files
+      ansible.builtin.apt:
+        autoremove: true
+        purge: true
+
+    - name: Run the equivalent of "apt-get clean" as a separate step
+      ansible.builtin.apt:
+        clean: true
+
+    - name: Install Applications
+      ansible.builtin.apt:
+        name:
+          - sudo
+          - git
+          - tar
+          - unzip
+          - curl
+          - wget
+          - make
+          - vim
+          - htop
+          - screen
+          - python3
+          - python3-pip
+        state: present
+
+    - name: Install Python Libraries
+      ansible.builtin.pip:
+        name:
+          - pyserial
+          - requests
+        state: present
