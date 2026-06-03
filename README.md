@@ -1,6 +1,6 @@
-# S1 Documentation
+# A1 Documentation
 
-This repo collects the collaborative work on S1 documentation. S1 RISC-V FPGA Linux gateway based on BeagleV-Fire
+This repo collects the collaborative work on A1 documentation. A1 RISC-V FPGA Linux gateway based on BeagleV-Fire
 
 Documentation is auto-generated from Markdown files in this repo.
 
