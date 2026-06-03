@@ -20,6 +20,6 @@ nav:
   - Overview: index.md
   - Features: features.md
   - Software:
-      - S1 and SuperMQ: supermq.md
+      - S1 and Magistrala: magistrala.md
       - Gateware: gateware.md
   - GPIO: gpio.md

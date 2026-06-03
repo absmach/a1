@@ -6,9 +6,9 @@ ping: ## Run ansible playbook to ping all hosts playbooks/ping.yaml
 setup: ## Run ansible playbook to setup the BeagleBone-V Fire playbooks/setup.yaml
 	ansible-playbook playbooks/setup.yaml
 
-.PHONY: setup-supermq
-setup-supermq: ## Run ansible playbook to setup supermq on the BeagleBone-V Fire playbooks/setup-supermq.yaml
-	ansible-playbook playbooks/setup-supermq.yaml
+.PHONY: setup-magistrala
+setup-magistrala: ## Run ansible playbook to setup magistrala on the BeagleBone-V Fire playbooks/setup-magistrala.yaml
+	ansible-playbook playbooks/setup-magistrala.yaml
 
 help: ## Show this help message
 	@which awk > /dev/null || (echo "awk not found. Please install it from https://www.gnu.org/software/gawk/manual/gawk.html" && exit 1)
